@@ -12,6 +12,7 @@
             required
           />
         </div>
+
         <div class="form-group">
           <label>Email</label>
           <input
@@ -21,6 +22,7 @@
             required
           />
         </div>
+
         <div class="form-group">
           <label>Phone</label>
           <input
@@ -30,15 +32,18 @@
             required
           />
         </div>
+
         <div class="form-group">
           <button class="btn btn-danger btn-block">Create</button>
         </div>
       </form>
     </div>
   </div>
-</template> 
+</template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
@@ -49,4 +54,24 @@ export default {
       },
     };
   },
+  methods: {
+    handleSubmitForm() {
+      let apiURL = "http://localhost:4000/api/create-student";
+
+      axios
+        .post(apiURL, this.student)
+        .then(() => {
+          this.$router.push("/view");
+          this.student = {
+            name: "",
+            email: "",
+            phone: "",
+          };
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
 };
+</script>
